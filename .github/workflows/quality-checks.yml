@@ -20,8 +20,8 @@ jobs:
         run: yarn
       - name: Audit
         run: yarn audit:fix --audit-level high --dry-run
-      - name: Run ESLint
-        run: yarn ci:lint
+      - name: Run Lint
+        run: yarn lint
 
   sast:
     runs-on: ubuntu-latest
