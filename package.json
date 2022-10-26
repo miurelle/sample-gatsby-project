@@ -1,29 +1,22 @@
 {
-  "name": "my-gatsby-site",
-  "version": "1.0.0",
+  "name": "root",
   "private": true,
-  "description": "my-gatsby-site",
-  "author": "Justine Luis Lopez",
-  "keywords": [
-    "gatsby"
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "start": "lerna run start",
+    "build": "lerna run build",
+    "serve": "lerna run serve",
+    "clean": "lerna run clean",
+    "lint": "lerna run typecheck",
+    "audit:fix": "yarn-audit-fix"
   },
-  "dependencies": {
-    "gatsby": "^4.24.4",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+  "engines": {
+    "node": "^16.13"
   },
   "devDependencies": {
-    "@types/node": "^17.0.45",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "typescript": "^4.8.3"
+    "lerna": "^6.0.1",
+    "yarn-audit-fix": "^9.3.6"
   }
 }

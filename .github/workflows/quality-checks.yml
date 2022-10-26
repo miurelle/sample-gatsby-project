@@ -1,0 +1,36 @@
+name: Quality Checks
+
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.13'
+          cache: 'yarn'
+      - run: set -e
+      - name: Install modules
+        run: yarn
+      - name: Audit
+        run: yarn audit:fix --audit-level high --dry-run
+      - name: Run ESLint
+        run: yarn ci:lint
+
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: AppThreat/sast-scan-action@master
+        with:
+          type: "python"
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: reports
+          path: reports
