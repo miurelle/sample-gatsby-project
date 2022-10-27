@@ -18,7 +18,9 @@ jobs:
       - name: Install modules
         run: yarn
       - name: Build and Deploy
+        env: 
+          GH_TOKEN: ${{ secrets.SECRET_NAME }}
         run: | 
           cd packages/web
-          yarn deploy https://{{ secrets.GH_TOKEN}}@github.com/miurelle/sample-gatsby-project.git
+          yarn deploy
         

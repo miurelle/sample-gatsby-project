@@ -10,6 +10,7 @@
     "serve": "lerna run serve",
     "clean": "lerna run clean",
     "lint": "lerna run typecheck",
+    "deploy": "lerna run deploy",
     "audit:fix": "yarn-audit-fix"
   },
   "engines": {
