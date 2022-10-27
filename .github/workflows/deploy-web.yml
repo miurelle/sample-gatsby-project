@@ -1,0 +1,24 @@
+name: Deploy Web
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.13'
+          cache: 'yarn'
+      - run: set -e
+      - name: Install modules
+        run: yarn
+      - name: Build and Deploy
+        run: | 
+          cd packages/web
+          yarn deploy https://{{ secrets.GH_TOKEN}}@github.com/miurelle/sample-gatsby-project.git
+        

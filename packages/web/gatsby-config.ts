@@ -12,4 +12,7 @@ const config: GatsbyConfig = {
   plugins: [],
 }
 
+module.exports = {
+  pathPrefix: "/reponame",
+}
 export default config
