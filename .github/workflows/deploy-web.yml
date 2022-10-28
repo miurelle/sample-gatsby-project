@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,10 +17,40 @@ jobs:
       - run: set -e
       - name: Install modules
         run: yarn
-      - name: Build and Deploy
+      - name: Build Gatsby
+        run: yarn build
+      - name: Tar files
+        run: tar -cvf gatsby-build.tar packages/web/public
+      - name: Archive build data
+        uses: actions/upload-artifact@v3
+        with:
+          name: gatsby-build
+          path: gatsby-build.tar
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: ['build']
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.13'
+          cache: 'yarn'
+      - run: set -e
+      - name: Install modules
+        run: yarn
+      - name: Download build data
+        uses: actions/download-artifact@v3
+        with:
+          name: gatsby-build
+      - name: Deploy
         env: 
           GH_TOKEN: ${{ secrets.SECRET_NAME }}
         run: | 
-          cd packages/web
+          tar -xvf gatsby-build.tar
           yarn deploy
         
